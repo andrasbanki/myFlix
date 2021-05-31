@@ -1,36 +1,36 @@
 const mongoose = require('mongoose');
 
 let movieSchema = mongoose.Schema({
-  title: {type: String, required: true},
-  description: {type: String, required: true},
-  genre:    [{type:mongoose.Schema.Types.ObjectId, ref:"genre"}],
-  director:  [{type:mongoose.Schema.Types.ObjectId, ref:"director"}],
+  Title: {type: String, required: true},
+  Description: {type: String, required: true},
+  Genre:    [{type:mongoose.Schema.Types.ObjectId, ref:'genres'}],
+  Director:  [{type:mongoose.Schema.Types.ObjectId, ref:'directors'}],
   ImageUrl: String,
 });
 
 let userSchema = mongoose.Schema({
-  username: {type: String, required: true},
-  password: {type: String, required: true},
-  email: {type: String, required: true},
-  birthday: Date,
-  favoritesMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'movie' }]
+  Username: {type: String, required: true},
+  Password: {type: String, required: true},
+  Email: {type: String, required: true},
+  Birthday: Date,
+  FavoritMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'movies' }]
 });
 
 let directorSchema = mongoose.Schema({
-  name: {type: String, required: true},
-  bio: {type: String, required: true},
-  birthday: Date,
+  Name: {type: String, required: true},
+  Bio: {type: String, required: true},
+  Birthday: Date,
 });
 
 let genreSchema = mongoose.Schema({
-    name: { type: String, required: true},
-    description:{ type: String, required: true}
+    Name: { type: String, required: true},
+    Description:{ type: String, required: true}
 });
 
-let movie = mongoose.model("movie",movieSchema)
-let user = mongoose.model("user",userSchema)
-let director = mongoose.model("director", directorSchema);
-let genre = mongoose.model("genre", genreSchema)
+let movie = mongoose.model('movie',movieSchema)
+let user = mongoose.model('user',userSchema)
+let director = mongoose.model('director', directorSchema);
+let genre = mongoose.model('genre', genreSchema)
 
 module.exports.movie = movie;
 module.exports.user = user;
