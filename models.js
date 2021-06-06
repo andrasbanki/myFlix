@@ -22,7 +22,7 @@ userSchema.statics.hashPassword = (Password) => {
   return bcrypt.hashSync(Password, 10);
 };
 
-userSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function(Password) {
   return bcrypt.hashSync(Password, this.Password);
 };
 
