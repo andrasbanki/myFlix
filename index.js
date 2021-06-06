@@ -22,7 +22,7 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'https://git.heroku.com/andrasbanki-myflixapp.git'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to my app!');
 });
 
-app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/movies', (req, res) => {
   movies.find()
     .then((moviesSearch) => {
       res.status(201).json(moviesSearch);
@@ -53,7 +53,7 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) =>
     });
 });
 
-app.get('/movies/:Title', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/movies/:Title', (req, res) => {
   movies.findOne({ Title: req.params.Title })
   .then((usermovie) => {
     res.json(usermovie);
@@ -64,7 +64,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', {session: false}), (req, 
   });
 });
 
-app.get('/directors', passport.authenticate('jwt', {session: false}), (req,res)=>{
+app.get('/directors', (req,res)=>{
   directors.find()
   .then((directorSearch) => {
     res.status(201).json(directorSearch);
@@ -75,7 +75,7 @@ app.get('/directors', passport.authenticate('jwt', {session: false}), (req,res)=
   });
 });
 
-app.get('/directors/:Name', passport.authenticate('jwt', {session: false}), (req,res)=>{
+app.get('/directors/:Name', (req,res)=>{
   directors.findOne({ Name: req.params.Name })
   .then((nameDirector) => {
     res.json(nameDirector);
@@ -86,7 +86,7 @@ app.get('/directors/:Name', passport.authenticate('jwt', {session: false}), (req
   });
 }); 
 
-app.get('/genres', passport.authenticate('jwt', {session: false}), (req,res)=>{
+app.get('/genres', (req,res)=>{
   genres.find()
   .then((genreSearch) => {
     res.status(201).json(genreSearch);
@@ -97,7 +97,7 @@ app.get('/genres', passport.authenticate('jwt', {session: false}), (req,res)=>{
   });
 });
 
-app.get('/genres/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/genres/:Name', (req, res) => {
   genres.findOne({ 'Name': req.params.Name })
     .then ((nameGenres) => {
       res.json(nameGenres);
@@ -171,7 +171,7 @@ app.post('/users',
 
 // Get all users
 
-app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users', (req, res) => {
   users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -184,7 +184,7 @@ app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => 
 
 // Get a user by username
 
-app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users/:Username', (req, res) => {
   users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
@@ -207,12 +207,28 @@ app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req
   Birthday: Date
 }*/
 
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', {session: false}),
+
+[
+  check('Username', 'Username is required').isLength({min:5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+
+  let errors = validationResult(req);
+  
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  };
+
+  let hashedPassword = users.hashPassword(req.body.Password);
+
   users.findOneAndUpdate({ Username: req.params.Username }, 
     { $set:
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword,
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
