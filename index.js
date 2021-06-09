@@ -7,7 +7,6 @@ const app = express();
 const {check, validationResult} = require('express-validator');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
-let auth = require('./auth.js')(app);
 const passport = require('passport');
 require('./passport');
 
@@ -21,6 +20,8 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
+
+let auth = require('./auth.js')(app);
 
 let allowedOrigins = ['http://localhost:8080', 'https://git.heroku.com/andrasbanki-myflixapp.git'];
 
