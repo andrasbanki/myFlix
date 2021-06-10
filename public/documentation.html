@@ -24,85 +24,27 @@
           <th>Request</th>
           <th>URL</th>
           <th>HTTP Method</th>
+          <th>Authorization</th>
           <th>Request body data format</th>
           <th>Response body data format</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Welcome page</td>
-          <td>/</td>
-          <td>GET</td>
+          <td>A login is a set of credentials used to authenticate a user</td>
+          <td>/login</td>
+          <td>POST</td>
           <td>None</td>
-          <td>Welcoming text </td>
-        </tr>
-        <tr>
-          <td>Documentation</td>
-          <td>/documentation.html</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>Documentation about the API</td>
-        </tr>
-        <tr>
-          <td>Return a list of all the movies</td>
-          <td>/movies</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>JSON object holding data about all the movies</td>
-        </tr>
-        <tr>
-          <td>Return data about a single movie by title</td>
-          <td>/movies/:Title</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>JSON object holding data about a single movie by title<br> e.g. <br>
-            { "_id" : ObjectId,<br>
-            "Title" : "Title",<br>
-            "Description" : "Description",<br>
-            "Genre" : "Genre",<br>
-            "Director" : "Director",<br>
-            "imageUrl" : "imageUrl" }
-          </td>
-        </tr>
-        <tr>
-          <td>Return data about a genre by name</td>
-          <td>/genres</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>JSON object holding data about all genres</td>
-        </tr>
-        <tr>
-          <td>Return data about a single genre by name</td>
-          <td>/genres/:Name</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>JSON object holding data about a single genre by name<br>e.g.<br>
-            { "_id" : "ObjectId",<br>
-            "Name" : "Name",<br>
-            "Description" : "Description" }</td>
-        </tr>
-        <tr>
-          <td>Return a list of all the directors</td>
-          <td>/directors</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>JSON object holding data about all directors</td>
-        </tr>
-        <tr>
-          <td>Return data about a single director by name</td>
-          <td>/directors/:Name</td>
-          <td>GET</td>
-          <td>None</td>
-          <td>JSON object holding data about a single director by name<br>e.g.<br>
-            { "_id" : "ObjectId",<br>
-            "Name" : "Name",<br>
-            "Bio" : "Bio",<br>
-            "Birthday" : "1993-01-01" }</td>
+          <td>A JSON object holding data about the user and password<br>e.g.<br>
+            { Username: String,<br>
+              Password: String}</td>
+          <td>User is logged in</td>
         </tr>
         <tr>
           <td>Allow new users to register</td>
           <td>/users</td>
           <td>POST</td>
+          <td>None</td>
           <td>A JSON object holding data about the new user<br>e.g.<br>
             { Username: String,<br>
               Password: String,<br>
@@ -120,6 +62,7 @@
           <td>Allow users to update their user info</td>
           <td>/users/:Username</td>
           <td>PUT</td>
+          <td>Bearer Token</td>
           <td>A JSON object holding data about the user´s update<br>e.g.<br>
             { Username: String,<br>
               Password: String,<br>
@@ -138,12 +81,14 @@
           <td>/users</td>
           <td>GET</td>
           <td>None</td>
+          <td>None</td>
           <td>JSON object holding data about all the users</td>
         </tr>
         <tr>
           <td>Return data about a single user by username</td>
           <td>/users/:Username</td>
           <td>GET</td>
+          <td>None</td>
           <td>None</td>
           <td>JSON object holding data about a single user by username<br>e.g.<br>
             { "Username": "Username",<br>
@@ -156,6 +101,7 @@
           <td>Allow users to add a movie to their list of favorites</td>
           <td>/users/:Username/favorites/:_id</td>
           <td>POST</td>
+          <td>Bearer Token</td>
           <td>A JSON Object holding data about the movies to add to the favorites list</td>
           <td>A response containing that the user added a movie to the favorites list<br>e.g.<br>
             { "FavoritMovies": [movieID],<br>
@@ -169,6 +115,7 @@
           <td>Allow users to remove a movie from their list of favorites</td>
           <td>/users/:Username/favorites/:_id</td>
           <td>DELETE</td>
+          <td>Bearer Token</td>
           <td>None</td>
           <td>A text message indicating whether the movie was successfully removed from favorites.</td>
         </tr>
@@ -176,8 +123,71 @@
           <td>Allow existing users to deregister</td>
           <td>/users/:Username</td>
           <td>DELETE</td>
+          <td>Bearer Token</td>          
           <td>None</td>
           <td>A text message indicating whether the user was successfully deleted</td>
+        </tr>
+        <tr>
+          <td>Return a list of all the movies</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>JSON object holding data about all the movies</td>
+        </tr>
+        <tr>
+          <td>Return data about a single movie by title</td>
+          <td>/movies/:Title</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>JSON object holding data about a single movie by title<br> e.g. <br>
+            { "_id" : ObjectId,<br>
+            "Title" : "Title",<br>
+            "Description" : "Description",<br>
+            "Genre" : "Genre",<br>
+            "Director" : "Director",<br>
+            "imageUrl" : "imageUrl" }
+          </td>
+        </tr>
+        <tr>
+          <td>Return data about a genre by name</td>
+          <td>/genres</td>
+          <td>GET</td>
+          <td>None</td> 
+          <td>None</td>
+          <td>JSON object holding data about all genres</td>
+        </tr>
+        <tr>
+          <td>Return data about a single genre by name</td>
+          <td>/genres/:Name</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>JSON object holding data about a single genre by name<br>e.g.<br>
+            { "_id" : "ObjectId",<br>
+            "Name" : "Name",<br>
+            "Description" : "Description" }</td>
+        </tr>
+        <tr>
+          <td>Return a list of all the directors</td>
+          <td>/directors</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>JSON object holding data about all directors</td>
+        </tr>
+        <tr>
+          <td>Return data about a single director by name</td>
+          <td>/directors/:Name</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>None</td>
+          <td>JSON object holding data about a single director by name<br>e.g.<br>
+            { "_id" : "ObjectId",<br>
+            "Name" : "Name",<br>
+            "Bio" : "Bio",<br>
+            "Birthday" : "1993-01-01" }</td>
         </tr>
       </tbody>
     </table>
