@@ -1,6 +1,6 @@
 # myFlix App
 
-Latest update: 06.05.2021
+Latest update: 22.06.2021
 
 ## Objective
 
@@ -19,11 +19,9 @@ Documentation: https://andrasbanki-myflixapp.herokuapp.com/documentation.html
 
 This Project will use
 
-- JavaScript
-- Node.js
-- Express
-- MongoDB
+-   JavaScript
+-   Node.js
+-   Express
+-   MongoDB
 
 Hosting on Heroku
-
-
