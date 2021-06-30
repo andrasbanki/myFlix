@@ -5,7 +5,7 @@ const passport = require('passport');
 
 require('./passport'); // Your local passport file
 
-let allowedOrigins = ['http://localhost:8080', 'https://git.heroku.com/andrasbanki-myflixapp.git', 'http://localhost:1234'];
+let allowedOrigins = ['http://localhost:8080', 'https://git.heroku.com/andrasbanki-myflixapp.git', 'http://localhost:1234', 'https://andrasbanki-myflixapp.herokuapp.com/'];
 
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
