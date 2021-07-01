@@ -23,7 +23,11 @@ app.use(bodyParser.json());
 
 let auth = require('./auth.js')(app);
 
-app.use(cors())
+app.use(
+  cors({
+    origin: '*',
+  })
+)
 
 // GET requests
 
