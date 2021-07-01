@@ -4,7 +4,6 @@ const uuid = require('uuid');
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
-app.use(cors());
 const {check, validationResult} = require('express-validator');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -19,6 +18,7 @@ const genres = Models.Genre;
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+app.use(cors());
 app.use(morgan('common'));
 app.use(bodyParser.json());
  
@@ -27,7 +27,7 @@ let auth = require('./auth.js')(app);
 // GET requests
 
 app.get('/', (req, res) => {
-  res.send('Welcome to my app!');
+  res.send('Welcome to my app!!!');
 });
 
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
