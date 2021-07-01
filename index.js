@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
+app.use(cors());
 const {check, validationResult} = require('express-validator');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -20,8 +21,7 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
-app.use(cors());
-
+ 
 let auth = require('./auth.js')(app);
 
 // GET requests
