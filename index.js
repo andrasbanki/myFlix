@@ -23,8 +23,6 @@ app.use(bodyParser.json());
 
 let auth = require('./auth.js')(app);
 
-let allowedOrigins = ['http://localhost:8080', 'https://git.heroku.com/andrasbanki-myflixapp.git', 'http://localhost:1234', 'https://andrasbanki-myflixapp.herokuapp.com/'];
-
 app.use(cors())
 
 // GET requests
