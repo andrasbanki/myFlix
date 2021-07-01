@@ -20,14 +20,9 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(cors());
 
 let auth = require('./auth.js')(app);
-
-app.use(
-  cors({
-    origin: '*',
-  })
-)
 
 // GET requests
 
