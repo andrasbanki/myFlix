@@ -30,8 +30,8 @@ app.get('/', (req, res) => {
   res.send('Welcome to my app!!!');
 });
 
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
-  movies.find().populate('Genre').populate('Director')
+app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
+  movies.find().populate('genre').populate('director')
     .then((moviesSearch) => {
       res.status(201).json(moviesSearch);
     })
