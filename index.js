@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
-  movies.find()
+  movies.find().populate('Genre').populate('Director')
     .then((moviesSearch) => {
       res.status(201).json(moviesSearch);
     })
