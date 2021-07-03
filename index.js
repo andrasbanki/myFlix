@@ -15,8 +15,8 @@ const users = Models.User;
 const directors = Models.Director;
 const genres = Models.Genre;
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
@@ -30,8 +30,8 @@ app.get('/', (req, res) => {
   res.send('Welcome to my app!!!');
 });
 
-app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
-  movies.find().populate('genre').populate('director')
+app.get('/movies',  (req, res) => {
+  movies.find({}).populate({path:'Genre', model:'Genre'}).populate({path:'Director', model: 'Director'})
     .then((moviesSearch) => {
       res.status(201).json(moviesSearch);
     })

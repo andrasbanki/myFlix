@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt');
 let movieSchema = mongoose.Schema({
   Title: {type: String, required: true},
   Description: {type: String, required: true},
-  Genre:    [{type:mongoose.Schema.Types.ObjectId, ref:'genres'}],
-  Director:  [{type:mongoose.Schema.Types.ObjectId, ref:'directors'}],
+  Genre: {type:mongoose.Schema.Types.ObjectId, ref:'genres'},
+  Director: {type:mongoose.Schema.Types.ObjectId, ref:'directors'},
   ImageUrl: String,
 });
 
@@ -36,12 +36,12 @@ let genreSchema = mongoose.Schema({
     Description:{ type: String, required: true}
 });
 
-let movie = mongoose.model('movie',movieSchema)
-let user = mongoose.model('user',userSchema)
-let director = mongoose.model('director', directorSchema);
-let genre = mongoose.model('genre', genreSchema)
+const Movie = mongoose.model('Movie',movieSchema)
+const User = mongoose.model('User',userSchema)
+const Director = mongoose.model('Director', directorSchema);
+const Genre = mongoose.model('Genre', genreSchema)
 
-module.exports.Movie = movie;
-module.exports.User = user;
-module.exports.Director = director;
-module.exports.Genre = genre;
+module.exports.Movie = Movie;
+module.exports.User = User;
+module.exports.Director = Director;
+module.exports.Genre = Genre;
